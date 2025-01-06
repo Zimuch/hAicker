@@ -9,8 +9,9 @@
 ## Autori
 Il progetto è stato sviluppato da:
 
-**Silvana De Martino**
-**Simon Carbone**
+-**Silvana De Martino**
+
+-**Simon Carbone**
 
 ## Tecnologie
 
