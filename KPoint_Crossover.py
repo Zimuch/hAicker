@@ -1,30 +1,35 @@
 import random
-import numpy as np
 
 def k_point_crossover(parent1, parent2, k):
     """
-    Esegue un crossover a k punti tra due genitori.
+    Esegue un crossover a k punti tra due genitori per generare due figli.
 
-    Parametri:
-    parent1 (numpy.ndarray): Primo genitore.
-    parent2 (numpy.ndarray): Secondo genitore.
-    k (int): Numero di punti di crossover.
-
-    Ritorna:
-    tuple: Due figli generati dal crossover (numpy.ndarray, numpy.ndarray).
+    :param parent1: Lista o array del primo genitore.
+    :param parent2: Lista o array del secondo genitore.
+    :param k: Numero di punti di crossover.
+    :return: Due nuovi individui (figli).
     """
+    # Assicurati che i genitori abbiano la stessa lunghezza
     if len(parent1) != len(parent2):
         raise ValueError("I genitori devono avere la stessa lunghezza")
 
-    n = len(parent1)
-    crossover_points = sorted(random.sample(range(1, n), k))  # Genera k punti di crossover (esclude 0)
-    child1, child2 = np.copy(parent1), np.copy(parent2)
+    length = len(parent1)
+    # Genera k punti di crossover casuali unici e ordinati
+    cut_points = sorted(random.sample(range(1, length), k))
 
-    # Alterna tra i segmenti per creare i figli
-    for i in range(len(crossover_points)):
-        start = crossover_points[i]
-        end = crossover_points[i + 1] if i + 1 < len(crossover_points) else n
-        if i % 2 == 0:  # Scambia segmenti per figli alternati
-            child1[start:end], child2[start:end] = parent2[start:end], parent1[start:end]
+    # Aggiungi l'inizio e la fine per facilitare gli scambi
+    cut_points = [0] + cut_points + [length]
+    
+    child1, child2 = [], []
+
+    # Alterna tra genitori nelle sezioni definite dai punti di taglio
+    for i in range(len(cut_points) - 1):
+        start, end = cut_points[i], cut_points[i + 1]
+        if i % 2 == 0:
+            child1.extend(parent1[start:end])
+            child2.extend(parent2[start:end])
+        else:
+            child1.extend(parent2[start:end])
+            child2.extend(parent1[start:end])
 
     return child1, child2

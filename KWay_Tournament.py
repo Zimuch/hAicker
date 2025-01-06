@@ -1,6 +1,6 @@
 import random
 
-def k_way_tournament_selection(population, fitness_values, k):
+def k_way_tournament_min(population, fitness_values, k):
     """
     Esegue una selezione a torneo k-way dalla popolazione basata sui valori di fitness.
 
@@ -20,8 +20,9 @@ def k_way_tournament_selection(population, fitness_values, k):
         tournament_contestants = [population[i] for i in tournament_indices]
         tournament_fitnesses = [fitness_values[i] for i in tournament_indices]
 
-        # Trova l'individuo con la fitness migliore
-        best_index = tournament_indices[tournament_fitnesses.index(max(tournament_fitnesses))]
+        
+        # Trova l'individuo con la fitness migliore (minore)
+        best_index = tournament_indices[tournament_fitnesses.index(min(tournament_fitnesses))]
         selected_individuals.append(population[best_index])
 
     return selected_individuals
