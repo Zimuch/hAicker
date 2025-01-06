@@ -47,16 +47,11 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
         for i in range(1, num_cells):
             if remaining_resources > 0:
                 max_possible = remaining_resources
-                resources = random.randint(0, 150)
+                resources = random.randint(0, 100)
                 if resources > max_possible:
                     resources = max_possible
                 individual[i] += resources  # Assegniamo le risorse alla cella
                 remaining_resources -= resources  # Decrementiamo le risorse rimanenti
-
-        # Se ci sono risorse rimanenti, aggiungi le restanti risorse alla prima cella (oltre alla 0)
-        if remaining_resources > 0:
-            individual[1] += remaining_resources
-
 
 
         population.append(individual)
@@ -67,11 +62,11 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
 
 
 # Parametri iniziali
-POP_SIZE = 12
-NUM_CELLS = 20
+POP_SIZE = 20
+NUM_CELLS = 25
 TOTAL_RESOURCES = 2000
 MIN_RESOURCES = 20
-TOURNAMENT_SIZE = 5
+TOURNAMENT_SIZE = 10
 CROSSOVER_POINTS = 4
 
 # Generazione della popolazione iniziale
@@ -79,7 +74,7 @@ population = generate_population(POP_SIZE, NUM_CELLS, TOTAL_RESOURCES, MIN_RESOU
 
 # Stampa alcuni risultati di esempio per vedere la distribuzione delle risorse
 for i, individual in enumerate(population):
-    print(f"Individuo {i}: {individual[:20]}... (total resources: {sum(individual)- individual[0]})")
+    print(f"Individuo {i}: {individual[:25]}... (total resources: {sum(individual)- individual[0]})")
 
 # Valutazione della fitness degli individui
 lambda_value = 1.0  # Puoi scegliere il valore di lambda_value secondo le tue esigenze
