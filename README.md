@@ -16,4 +16,4 @@ Il progetto è stato sviluppato da:
 
 Il progetto è stato realizzato con l'aiuto di:
 
-[![Python](https://img.icons8.com/color/48/000000/python.png) **Python**
+![Python](https://img.icons8.com/color/48/000000/python.png) **Python**
