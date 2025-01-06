@@ -2,7 +2,7 @@
 
 ## Introduzione
 
-**WasteGone**
+**hAicker**
 
 
 
@@ -16,4 +16,4 @@ Il progetto è stato sviluppato da:
 
 Il progetto è stato realizzato con l'aiuto di:
 
-[![Python]([https://img.icons8.com/color/48/000000/android-studio.png](https://img.icons8.com/?size=60&id=pIJdjOoL6KfU&format=png&color=000000))] **Python**
+[![Python](https://img.icons8.com/color/48/000000/python.png) **Python**
