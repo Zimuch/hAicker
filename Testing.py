@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from KWay_Tournament import k_way_tournament_selection
+from KWay_Tournament import k_way_tournament_min
 from KPoint_Crossover import k_point_crossover
 from Fitness2 import fitness_function
 
@@ -66,7 +66,7 @@ POP_SIZE = 20
 NUM_CELLS = 25
 TOTAL_RESOURCES = 2000
 MIN_RESOURCES = 20
-TOURNAMENT_SIZE = 10
+TOURNAMENT_SIZE = 5
 CROSSOVER_POINTS = 4
 
 # Generazione della popolazione iniziale
@@ -81,15 +81,23 @@ lambda_value = 1.0  # Puoi scegliere il valore di lambda_value secondo le tue es
 fitness_values = [fitness_function(individual, lambda_value, index)for index, individual in enumerate(population)]
 
 # Selezione con il K-Way Tournament
-selected_individuals = k_way_tournament_selection(population, fitness_values, TOURNAMENT_SIZE)
+selected_individuals = k_way_tournament_min(population, fitness_values, TOURNAMENT_SIZE)
 
 # Crossover tra i primi due individui selezionati
 parent1 = selected_individuals[0]
 parent2 = selected_individuals[1]
 child1, child2 = k_point_crossover(parent1, parent2, CROSSOVER_POINTS)
 
+# Converti i figli in liste di interi normali per la stampa
+child1 = [int(x) for x in child1]
+child2 = [int(x) for x in child2]
+
 # Output per verificare
-print("\nIndividuo 1:", parent1)
-print("\nIndividuo 2:", parent2)
-print("\nFiglio 1:", child1)
-print("\nFiglio 2:", child2)
+print("\nGenitore 1 scelto dal K-Way Tournament:", parent1)
+print("\nGenitore 2 scelto dal K-Way Tournament:", parent2)
+print(f"Figlio 1: {child1} ")
+print(f"Figlio 2: {child2} ")
+
+
+
+
