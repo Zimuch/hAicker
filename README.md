@@ -2,16 +2,16 @@
 
 ## Introduzione
 
-
+**hAicker** esplora l'uso degli algoritmi genetici per migliorare la sicurezza del software, ottimizzando la distribuzione delle risorse per la difesa contro gli attacchi hacker. L'approccio si concentra sull'analisi delle vulnerabilità del sistema, consentendo di allocare in modo strategico le risorse sin dalle fasi iniziali dello sviluppo del software. Gli algoritmi genetici permettono di determinare la distribuzione più efficace delle risorse difensive in base alla gravità delle vulnerabilità, con l'obiettivo di ridurre i rischi e i costi. Il progetto fornisce uno strumento utile per i team di sviluppo per identificare i punti critici del loro sistema e ottimizzare la protezione attraverso un processo di evoluzione e selezione.
 
 
 
 ## Autori
 Il progetto è stato sviluppato da:
 
--**Silvana De Martino**
+- **Silvana De Martino**
 
--**Simon Carbone**
+- **Simon Carbone**
 
 ## Tecnologie
 
