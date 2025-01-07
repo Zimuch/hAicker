@@ -27,8 +27,10 @@ def mutate(individual, mutation_rate):
     mutated_individual = individual[:]
     for i in range(len(individual)):
         if random.random() < mutation_rate:
-            # Esempio: inverte il valore del gene (binary flip)
-            mutated_individual[i] = 1 - mutated_individual[i]  # Cambia secondo il tuo caso
+            mutated_value = individual[i] + random.randint(-10, 10)
+            # Assicura che il valore mutato non sia negativo, non sia minore di 20 e sia intero
+            mutated_value = max(20, mutated_value)
+            mutated_individual[i] = mutated_value
     return mutated_individual
 
 # Esempio di utilizzo in un ciclo generazionale
