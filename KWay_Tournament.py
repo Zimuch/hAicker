@@ -24,5 +24,6 @@ def k_way_tournament_min(population, fitness_values, k):
         # Trova l'individuo con la fitness migliore (minore)
         best_index = tournament_indices[tournament_fitnesses.index(min(tournament_fitnesses))]
         selected_individuals.append(population[best_index])
+        
 
     return selected_individuals
