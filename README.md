@@ -21,8 +21,12 @@ Il progetto è stato realizzato con l'aiuto di:
 
 ![Visual Studio Code](https://img.icons8.com/?size=48&id=9OGIyU8hrxW5&format=png&color=000000) **Visual Studio Code** - Editor di testo e ambiente di sviluppo integrato (IDE) utilizzato per scrivere, eseguire e debuggare il codice.
 
+![undefined - Imgur](https://github.com/user-attachments/assets/1fd747cb-c26e-462a-ba4b-86e42408d3f8)
+ **Overleaf** - un editor LaTeX basato su cloud per permettere la collaborazione al fine di scrivere, modificare e pubblicare paper scientifici.
 
-## Clonare il progetto
+
+ ## Progetto
+ 
 Per clonare il progetto **hAicker** e testarlo localmente, segui i seguenti passaggi:
 
 1. Assicurati di avere **Git** installato sul tuo sistema.
@@ -36,6 +40,5 @@ Al progetto hanno partecipato:
 
 <a href="https://github.com/Zimuch/hAicker/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=Zimuch/hAicker" />
-   <img src="https://contrib.rocks/image?repo=ivycss/hAicker" />
 </a>
 
