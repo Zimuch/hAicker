@@ -24,6 +24,8 @@ Il progetto è stato realizzato con l'aiuto di:
 ![undefined - Imgur](https://github.com/user-attachments/assets/1fd747cb-c26e-462a-ba4b-86e42408d3f8)
  **Overleaf** - un editor LaTeX basato su cloud per permettere la collaborazione al fine di scrivere, modificare e pubblicare paper scientifici.
 
+
+ ## Progetto
  
 Per clonare il progetto **hAicker** e testarlo localmente, segui i seguenti passaggi:
 
