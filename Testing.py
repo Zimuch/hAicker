@@ -189,6 +189,7 @@ for generation in range(MAX_GENERATIONS):
     print(f"Fitness Figlio 4 (Mutato): {fitness_values_mutate[3]}")
     print(f"Fitness Figlio 5 (Mutato): {fitness_values_mutate[4]}")
     print(f"Fitness Figlio 6 (Mutato): {fitness_values_mutate[5]}")
+    print(f"\nFiglio 1 (mutato): {childmutate1}")
 
     # Calcolo del cambiamento di fitness e aggiornamento del tasso di mutazione
     fitness_change = calculate_fitness_change(previous_fitness, current_fitness)

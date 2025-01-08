@@ -131,7 +131,7 @@ print(f"\nFiglio 2: {child2} \n")
 fitness_values_children = [fitness_function(child1, lambda_value, 0), fitness_function(child2, lambda_value, 1)]
 (fitness_values_children[0])
 (fitness_values_children[1])
-
+print(f"\nFiglio 1 (mutato): {childmutate1}")
 # Conserva i valori di fitness dei figli
 print(f"\nFiglio 1 (mutato): {childmutate1}")
 print(f"\nFiglio 2 (mutato): {childmutate2}\n")
