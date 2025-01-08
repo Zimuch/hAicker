@@ -21,8 +21,7 @@ Il progetto è stato realizzato con l'aiuto di:
 
 ![Visual Studio Code](https://img.icons8.com/?size=48&id=9OGIyU8hrxW5&format=png&color=000000) **Visual Studio Code** - Editor di testo e ambiente di sviluppo integrato (IDE) utilizzato per scrivere, eseguire e debuggare il codice.
 
-
-## Clonare il progetto
+![Overleaf](https://imgur.com/VsdKVNb) **Overleaf** - uno editor LaTeX basato su cloud per permettere la collaborazione al fine di scrivere, modificare e pubblicare paper scientifici.
 Per clonare il progetto **hAicker** e testarlo localmente, segui i seguenti passaggi:
 
 1. Assicurati di avere **Git** installato sul tuo sistema.
