@@ -49,14 +49,6 @@ def funzione_di_fitness(celle, risorse, lambd, alpha, beta):
     totale_vulnerabilita = sum(vulnerabilita)
 
     fitness = alpha * totale_danni + beta * totale_vulnerabilita
+    
     return fitness
 
-# Esempio di utilizzo
-celle = [10, 20, 30, 40, 50]  # Ranking delle celle
-risorse = [50, 40, 30, 20, 10]  # Risorse allocate per cella
-lambd = 1.0  # Costante di peso per il ranking
-alpha = 0.5  # Peso per i danni potenziali
-beta = 0.5   # Peso per la vulnerabilità
-
-fitness_value = funzione_di_fitness(celle, risorse, lambd, alpha, beta)
-print(f"Valore della funzione di fitness: {fitness_value}")

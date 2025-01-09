@@ -25,7 +25,7 @@ def adaptive_mutation(mutation_rate, fitness_change, fitness_threshold):
 def mutate(individual, mutation_rate):
     """Esegue la mutazione su un individuo."""
     mutated_individual = individual[:]
-    for i in range(len(individual)):
+    for i in range(1,len(individual)):
         if random.random() < mutation_rate:
             mutated_value = individual[i] + random.randint(-10, 10)
             # Assicura che il valore mutato non sia negativo, non sia minore di 20 e sia intero
