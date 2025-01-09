@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import random
 from KWay_Tournament import k_way_tournament_min
@@ -65,13 +66,13 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
 
 
 # Parametri iniziali
-POP_SIZE = 20
+POP_SIZE = 12
 NUM_CELLS = 25
 TOTAL_RESOURCES = 2000
 MIN_RESOURCES = 20
-TOURNAMENT_SIZE = 5
+TOURNAMENT_SIZE = 3
 CROSSOVER_POINTS = 4
-MAX_GENERATIONS = 4
+MAX_GENERATIONS = 7
 TARGET_FITNESS = 27  # Soglia di fitness target
 
 # Parametri di mutazione
@@ -84,13 +85,13 @@ population = generate_population(POP_SIZE, NUM_CELLS, TOTAL_RESOURCES, MIN_RESOU
 
 # Ciclo evolutivo
 for generation in range(MAX_GENERATIONS):
-    print(f"Generazione {generation}")
+    print(f"\nGenerazione {generation}\n")
 
 
     # Stampa alcuni risultati di esempio per vedere la distribuzione delle risorse
     for i, individual in enumerate(population):
         print(f"Individuo {i}: {individual[:25]}... (total resources: {sum(individual)- individual[0]})")
-
+    print("\n")
     # Valutazione della fitness degli individui
     lambda_value = 1.0  # Puoi scegliere il valore di lambda_value secondo le tue esigenze
     fitness_values = [fitness_function(individual, lambda_value, index)for index, individual in enumerate(population)]
@@ -100,8 +101,8 @@ for generation in range(MAX_GENERATIONS):
     print(f"\n  Fitness migliore: {min_fitness}")
 
     if min_fitness <= TARGET_FITNESS:
-        print("\n>>> Soluzione ottimale trovata!")
-        break
+        print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
+        sys.exit()
 
     # Selezione con il K-Way Tournament
     selected_individuals = k_way_tournament_min(population, fitness_values, TOURNAMENT_SIZE)
@@ -140,6 +141,7 @@ for generation in range(MAX_GENERATIONS):
     print(f"Fitness Genitore 5: {fitness_values_parent[4]}")
     print(f"Fitness Genitore 6: {fitness_values_parent[5]}")
 
+
     # Conserva i valori di fitness dei figli
     print(f"\nFiglio 1: {child1} ")
     print(f"\nFiglio 2: {child2} ")
@@ -147,13 +149,23 @@ for generation in range(MAX_GENERATIONS):
     print(f"\nFiglio 4: {child4} ")
     print(f"\nFiglio 5: {child5} ")
     print(f"\nFiglio 6: {child6} \n")
-    fitness_values_children = [fitness_function_parent(child1, lambda_value), fitness_function_parent(child2, lambda_value), fitness_function_parent(child3, lambda_value), fitness_function_parent(child4, lambda_value), fitness_function_parent(child5, lambda_value), fitness_function_parent(child6, lambda_value)]
+
+    fitness_values_children = [fitness_function_parent(child1, lambda_value), fitness_function_parent(child2, lambda_value), 
+                               fitness_function_parent(child3, lambda_value), fitness_function_parent(child4, lambda_value), 
+                               fitness_function_parent(child5, lambda_value), fitness_function_parent(child6, lambda_value)]
+    
     print(f"\nFitness Figlio 1: {fitness_values_children[0]}")
     print(f"Fitness Figlio 2: {fitness_values_children[1]}")
     print(f"Fitness Figlio 3: {fitness_values_children[2]}")
     print(f"Fitness Figlio 4: {fitness_values_children[3]}")
     print(f"Fitness Figlio 5: {fitness_values_children[4]}")
     print(f"Fitness Figlio 6: {fitness_values_children[5]}")
+
+      # Controlla se la fitness dei figli soddisfa la soglia
+    if min(fitness_values_children) <= TARGET_FITNESS:
+        print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
+        print(f"\nFiglio con la fitness ottimale: {min(fitness_values_children)}")
+        sys.exit()
 
     # Calcolo della fitness corrente prima della mutazione
     current_fitness = (fitness_function_parent(child1, lambda_value) + fitness_function_parent(child2, lambda_value)+fitness_function_parent(child3, lambda_value)+fitness_function_parent(child4, lambda_value)+fitness_function_parent(child5, lambda_value)+fitness_function_parent(child6, lambda_value)) / 6
@@ -189,7 +201,6 @@ for generation in range(MAX_GENERATIONS):
     print(f"Fitness Figlio 4 (Mutato): {fitness_values_mutate[3]}")
     print(f"Fitness Figlio 5 (Mutato): {fitness_values_mutate[4]}")
     print(f"Fitness Figlio 6 (Mutato): {fitness_values_mutate[5]}")
-    print(f"\nFiglio 1 (mutato): {childmutate1}")
 
     # Calcolo del cambiamento di fitness e aggiornamento del tasso di mutazione
     fitness_change = calculate_fitness_change(previous_fitness, current_fitness)
@@ -197,4 +208,14 @@ for generation in range(MAX_GENERATIONS):
     print(f"  Fitness Change: {fitness_change:.4f}, Mutation Rate: {mutation_rate:.4f}")
     previous_fitness = current_fitness  # Aggiorna la fitness precedente
 
-print("\n>>> Evoluzione terminata.")
+          # Controlla se la fitness dei figli mutati soddisfa la soglia
+    if min(fitness_values_mutate) <= TARGET_FITNESS:
+        print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
+        print(f"\nFiglio mutato con la fitness ottimale: {min(fitness_values_mutate)}")
+        sys.exit()
+
+    # Sostituisce la popolazione con i figli e i figli mutati
+    population = [child1, child2, child3, child4, child5, child6, childmutate1, childmutate2, childmutate3, childmutate4, childmutate5, childmutate6]
+
+print("\n>>> Generazione di individui terminata.")
+print("\n>>> Soluzione ottimale non trovata.")
