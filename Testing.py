@@ -65,14 +65,14 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
 
 
 # Parametri iniziali
-POP_SIZE = 40
+POP_SIZE = 20
 NUM_CELLS = 25
 TOTAL_RESOURCES = 2000
 MIN_RESOURCES = 20
 TOURNAMENT_SIZE = 5
 CROSSOVER_POINTS = 4
-MAX_GENERATIONS = 10
-TARGET_FITNESS = 28  # Soglia di fitness target
+MAX_GENERATIONS = 4
+TARGET_FITNESS = 27  # Soglia di fitness target
 
 # Parametri di mutazione
 mutation_rate = 0.10

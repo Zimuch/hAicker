@@ -33,20 +33,3 @@ def mutate(individual, mutation_rate):
             mutated_individual[i] = mutated_value
     return mutated_individual
 
-# Esempio di utilizzo in un ciclo generazionale
-previous_fitness = 0.0  # Fitness media iniziale
-for generation in range(1, 101):  # 100 generazioni
-    # Valuta la fitness corrente (esempio: somma fitness di tutti gli individui)
-    current_fitness = random.uniform(0.5, 1.0)  # Simulazione di un valore
-    
-    # Calcola la variazione di fitness
-    fitness_change = calculate_fitness_change(previous_fitness, current_fitness)
-
-    # Aggiorna il tasso di mutazione
-    mutation_rate = adaptive_mutation(mutation_rate, fitness_change, fitness_threshold)
-
-    print(f"Generazione {generation} - Fitness Change: {fitness_change:.4f}, Mutation Rate: {mutation_rate:.4f}")
-
-    # Aggiorna la fitness precedente per la prossima iterazione
-    previous_fitness = current_fitness
-
