@@ -41,7 +41,7 @@ Al progetto hanno partecipato:
 <a href="https://github.com/Zimuch/hAicker/graphs/contributors">
  <a href="https://github.com/ivycss/hAicker/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=Zimuch/hAicker" />
-
+<a href="https://github.com/ivycss/hAicker/graphs/contributors">
 
 </a>
 
