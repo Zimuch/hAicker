@@ -1,4 +1,4 @@
-def fitness_function(individual, lambda_value, index):
+def fitness_function2(individual, lambda_value, omega1, omega2):
     """
     Calcola il punteggio fitness di un individuo.
 
@@ -36,11 +36,7 @@ def fitness_function(individual, lambda_value, index):
             distribution_weight += weight * rankings[i] / vulnerability_corrected
 
     # Funzione di fitness: bilanciamento tra i due obiettivi
-    omega1 = 0.5  # Peso per l'obiettivo 1
-    omega2 = 0.5  # Peso per l'obiettivo 2
-    fitness = omega1 * (1 - C) + omega2 * distribution_weight
+    fitness = omega1 * C + omega2 * distribution_weight
 
-# Stampa del valore della funzione di fitness calcolato
-    print(f"Fitness Score per Individuo {index}: {fitness}")
 
     return fitness

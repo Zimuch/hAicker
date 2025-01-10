@@ -1,12 +1,15 @@
 import sys
 import numpy as np
 import random
+from deap import tools
 from KWay_Tournament import k_way_tournament_min
 from KPoint_Crossover import k_point_crossover
-from Fitness2 import fitness_function
-from Fitness import funzione_di_fitness
+from Fitness2 import fitness_function_2
+from Fitness import fitness_function_1
 from Fitness_Genitore_Figlio import fitness_function_parent
+from FitnessCombinata import fitness_combinata
 from Mutation import mutate, calculate_fitness_change, adaptive_mutation
+from Normalizzazione import normalize
 
 
 def generate_population(pop_size, num_cells, total_resources, min_resources):
@@ -67,14 +70,19 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
 
 
 # Parametri iniziali
-POP_SIZE = 50
+POP_SIZE = 10
 NUM_CELLS = 25
 TOTAL_RESOURCES = 2000
 MIN_RESOURCES = 20
 TOURNAMENT_SIZE = 5
 CROSSOVER_POINTS = 4
-MAX_GENERATIONS = 100
+MAX_GENERATIONS = 1
 TARGET_FITNESS = 10 # Soglia di fitness target
+LAMBDA_VALUE = 1  # Valore di lambda 
+OMEGA1 = 0.5  # Peso per l'obiettivo 1
+OMEGA2 = 0.5  # Peso per l'obiettivo 2
+ALPHA = 0.5  # Peso per i danni potenziali
+BETA = 0.5  # Peso per la vulnerabilità
 
 # Parametri di mutazione
 mutation_rate = 0.02  # Tasso di mutazione iniziale
@@ -93,20 +101,24 @@ for generation in range(MAX_GENERATIONS):
     for i, individual in enumerate(population):
         print(f"Individuo {i}: {individual[:25]}... (total resources: {sum(individual)- individual[0]})")
     print("\n")
+
+
+
     # Valutazione della fitness degli individui
-    lambda_value = 1.0  # Puoi scegliere il valore di lambda_value secondo le tue esigenze
-    fitness_values = [fitness_function(individual, lambda_value, index)for index, individual in enumerate(population)]
+    fitness_2_values = [fitness_function_2(individual, LAMBDA_VALUE, index)  for individual in population]
+    fitness_1_values = [fitness_function_1(individual, LAMBDA_VALUE, ALPHA, BETA) for individual in population]
 
         # Stampa migliori fitness
-    min_fitness = min(fitness_values)
+    min_fitness = min(fitness_2_values)
     print(f"\n  Fitness migliore: {min_fitness}")
+ 
 
     if min_fitness <= TARGET_FITNESS:
         print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
         sys.exit()
 
     # Selezione con il K-Way Tournament
-    selected_individuals = k_way_tournament_min(population, fitness_values, TOURNAMENT_SIZE) 
+    selected_individuals = k_way_tournament_min(population, fitness_2_values, TOURNAMENT_SIZE) 
 
     # Crossover tra i primi due individui selezionati
     parent1 = selected_individuals[0]

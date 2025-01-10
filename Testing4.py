@@ -129,3 +129,8 @@ front = tools.sortNondominated(population, len(population), first_front_only=Tru
 print("\nSoluzioni Pareto-ottimali:")
 for ind in front:
     print(f"Individuo: {ind}, Fitness: {ind.fitness.values}")
+
+
+
+fitness_values = [(fitness_function_1(individual, lambda_value), 
+                  fitness_function_2(individual, TOTAL_RESOURCES, omega1, omega2)) for individual in population]
