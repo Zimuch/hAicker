@@ -4,12 +4,11 @@ import random
 from deap import tools
 from KWay_Tournament import k_way_tournament_min
 from KPoint_Crossover import k_point_crossover
-from Fitness2 import fitness_function_2
-from Fitness import fitness_function_1
+from Fitness2 import fitness_function2
+from Fitness import fitness_function1
 from Fitness_Genitore_Figlio import fitness_function_parent
-from FitnessCombinata import fitness_combinata
-from Mutation import mutate, calculate_fitness_change, adaptive_mutation
-from Normalizzazione import normalize
+from Fitness2Vecchia import fitness_vecchia_2
+from MutationVecchia import mutate, calculate_fitness_change, adaptive_mutation
 
 
 def generate_population(pop_size, num_cells, total_resources, min_resources):
@@ -70,19 +69,17 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
 
 
 # Parametri iniziali
-POP_SIZE = 10
+POP_SIZE = 50
 NUM_CELLS = 25
 TOTAL_RESOURCES = 2000
 MIN_RESOURCES = 20
 TOURNAMENT_SIZE = 5
 CROSSOVER_POINTS = 4
-MAX_GENERATIONS = 1
-TARGET_FITNESS = 10 # Soglia di fitness target
+MAX_GENERATIONS = 10
+TARGET_FITNESS = 25 # Soglia di fitness target
 LAMBDA_VALUE = 1  # Valore di lambda 
 OMEGA1 = 0.5  # Peso per l'obiettivo 1
 OMEGA2 = 0.5  # Peso per l'obiettivo 2
-ALPHA = 0.5  # Peso per i danni potenziali
-BETA = 0.5  # Peso per la vulnerabilità
 
 # Parametri di mutazione
 mutation_rate = 0.02  # Tasso di mutazione iniziale
@@ -105,8 +102,9 @@ for generation in range(MAX_GENERATIONS):
 
 
     # Valutazione della fitness degli individui
-    fitness_2_values = [fitness_function_2(individual, LAMBDA_VALUE, index)  for individual in population]
-    fitness_1_values = [fitness_function_1(individual, LAMBDA_VALUE, ALPHA, BETA) for individual in population]
+    fitness_2_values = [fitness_vecchia_2(individual, LAMBDA_VALUE) for individual in enumerate(population)]
+    fitness_1_values = [fitness_function1(individual, LAMBDA_VALUE) for individual in population]
+    fitness_combinata = [fitness_vecchia_2(individual, LAMBDA_VALUE, index) - fitness_function1(individual, LAMBDA_VALUE) for index, individual in enumerate(population)]
 
         # Stampa migliori fitness
     min_fitness = min(fitness_2_values)
@@ -127,9 +125,9 @@ for generation in range(MAX_GENERATIONS):
     parent4 = selected_individuals[3]
     parent5 = selected_individuals[4]
     parent6 = selected_individuals[5]
-    fitness_values_parent = [fitness_function_parent(parent1, lambda_value), fitness_function_parent(parent2, lambda_value), 
-                             fitness_function_parent(parent3, lambda_value), fitness_function_parent(parent4, lambda_value), 
-                             fitness_function_parent(parent5, lambda_value), fitness_function_parent(parent6, lambda_value)]
+    fitness_values_parent = [fitness_function_parent(parent1, LAMBDA_VALUE), fitness_function_parent(parent2, LAMBDA_VALUE), 
+                             fitness_function_parent(parent3, LAMBDA_VALUE), fitness_function_parent(parent4, LAMBDA_VALUE), 
+                             fitness_function_parent(parent5, LAMBDA_VALUE), fitness_function_parent(parent6, LAMBDA_VALUE)]
 
     # Converti i figli in liste di interi normali per la stampa
     child1, child2 = k_point_crossover(parent1, parent2, CROSSOVER_POINTS, TOTAL_RESOURCES)
@@ -165,9 +163,9 @@ for generation in range(MAX_GENERATIONS):
     print(f"\nFiglio 5: {child5} ... (total resources: {sum(child5)- child5[0]})")
     print(f"\nFiglio 6: {child6} ... (total resources: {sum(child6)- child6[0]})\n")
 
-    fitness_values_children = [fitness_function_parent(child1, lambda_value), fitness_function_parent(child2, lambda_value), 
-                               fitness_function_parent(child3, lambda_value), fitness_function_parent(child4, lambda_value), 
-                               fitness_function_parent(child5, lambda_value), fitness_function_parent(child6, lambda_value)]
+    fitness_values_children = [fitness_function_parent(child1, LAMBDA_VALUE), fitness_function_parent(child2, LAMBDA_VALUE), 
+                               fitness_function_parent(child3, LAMBDA_VALUE), fitness_function_parent(child4, LAMBDA_VALUE), 
+                               fitness_function_parent(child5, LAMBDA_VALUE), fitness_function_parent(child6, LAMBDA_VALUE)]
     
     print(f"\nFitness Figlio 1: {fitness_values_children[0]}")
     print(f"Fitness Figlio 2: {fitness_values_children[1]}")
@@ -183,9 +181,9 @@ for generation in range(MAX_GENERATIONS):
         sys.exit()
 
     # Calcolo della fitness corrente prima della mutazione
-    current_fitness = (fitness_function_parent(child1, lambda_value) + fitness_function_parent(child2, lambda_value)+
-                       fitness_function_parent(child3, lambda_value)+fitness_function_parent(child4, lambda_value)+
-                       fitness_function_parent(child5, lambda_value)+fitness_function_parent(child6, lambda_value)) / 6
+    current_fitness = (fitness_function_parent(child1, LAMBDA_VALUE) + fitness_function_parent(child2, LAMBDA_VALUE)+
+                       fitness_function_parent(child3, LAMBDA_VALUE)+fitness_function_parent(child4, LAMBDA_VALUE)+
+                       fitness_function_parent(child5, LAMBDA_VALUE)+fitness_function_parent(child6, LAMBDA_VALUE)) / 6
 
     # Applica mutazione ai figli
     childmutate1 = mutate(child1, mutation_rate)
@@ -197,12 +195,12 @@ for generation in range(MAX_GENERATIONS):
 
     # Calcolo dei valori di fitness per i figli mutati
     fitness_values_mutate = [
-    fitness_function_parent(childmutate1, lambda_value),
-    fitness_function_parent(childmutate2, lambda_value),
-    fitness_function_parent(childmutate3, lambda_value),
-    fitness_function_parent(childmutate4, lambda_value),
-    fitness_function_parent(childmutate5, lambda_value),
-    fitness_function_parent(childmutate6, lambda_value)
+    fitness_function_parent(childmutate1, LAMBDA_VALUE),
+    fitness_function_parent(childmutate2, LAMBDA_VALUE),
+    fitness_function_parent(childmutate3, LAMBDA_VALUE),
+    fitness_function_parent(childmutate4, LAMBDA_VALUE),
+    fitness_function_parent(childmutate5, LAMBDA_VALUE),
+    fitness_function_parent(childmutate6, LAMBDA_VALUE)
 ]
 
     # Stampa dei valori di fitness per i figli mutati
