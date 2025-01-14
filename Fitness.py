@@ -25,7 +25,7 @@ def calcola_danni_potenziali(celle, risorse, vulnerabilita):
     danni_potenziali = [r_i * (a_i / v_i) for r_i, a_i, v_i in zip(celle, risorse, vulnerabilita)]
     return danni_potenziali
 
-def fitness_function1(risorse, lambd):
+def fitness1_function(risorse, lambd):
     """
     Calcola la funzione di fitness per il sistema.
 

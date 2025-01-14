@@ -4,10 +4,9 @@ import random
 from deap import tools
 from KWay_Tournament import k_way_tournament_min
 from KPoint_Crossover import k_point_crossover
-from Fitness2 import fitness_function2
-from Fitness import fitness_function1
-from Fitness_Genitore_Figlio import fitness_function_parent
-from Fitness2Vecchia import fitness_vecchia_2
+from Fitness import fitness1_function
+from Fitness2 import fitness2_function
+from Fitness3 import fitness3_function
 from MutationVecchia import mutate, calculate_fitness_change, adaptive_mutation
 
 
@@ -105,35 +104,41 @@ for generation in range(MAX_GENERATIONS):
 
 
     # Valutazione della fitness degli individui
-    fitness_2_values = [fitness_vecchia_2(individual, LAMBDA_VALUE2) for individual in population]
-    fitness_1_values = [fitness_function1(individual, LAMBDA_VALUE1) for individual in population]
+    fitness1_values = [fitness1_function(individual, LAMBDA_VALUE1) for individual in population]
+    fitness2_values = [fitness2_function(individual,OMEGA1) for individual in population]
+    fitness3_values = [fitness3_function(individual, LAMBDA_VALUE2, OMEGA2) for individual in population]
 
 
-        # Stampa migliori fitness
-
-    min_fitness = min(fitness_1_values)
+    # Stampa migliori fitness
+    min_fitness = min(fitness1_values)
     print(f"\n  Prima Fitness migliore: {min_fitness}")
 
-    min_fitness = min(fitness_2_values)
-    print(f"\n  Seconda Fitness migliore: {min_fitness}\n")
+    min_fitness = min(fitness2_values)
+    print(f"\n  Seconda Fitness migliore: {min_fitness}")
+
+    min_fitness = min(fitness3_values)
+    print(f"\n  Terza Fitness migliore: {min_fitness}\n")
 
     if min_fitness <= TARGET_FITNESS:
         print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!\n")
         sys.exit()
 
     # Selezione con il K-Way Tournament
-    selected_individuals = k_way_tournament_min(population, fitness_2_values, TOURNAMENT_SIZE, NUM_WINNERS) 
-    fitness_1_values_parents = [fitness_function1(parent, LAMBDA_VALUE1) for parent in selected_individuals]
-    fitness2_values_parents = [fitness_vecchia_2(parent, LAMBDA_VALUE2) for parent in selected_individuals]
+    selected_individuals = k_way_tournament_min(population, fitness1_values, TOURNAMENT_SIZE, NUM_WINNERS) 
+    fitness1_values_parents = [fitness1_function(parent, LAMBDA_VALUE1) for parent in selected_individuals]
+    fitness2_values_parents = [(fitness2_function)(parent, LAMBDA_VALUE2) for parent in selected_individuals]
+    fitness3_values_parents = [(fitness3_function)(parent, LAMBDA_VALUE2, OMEGA2) for parent in selected_individuals]
 
     # Selezione con il K-Point Crossover
     children = k_point_crossover(selected_individuals, CROSSOVER_POINTS, NUM_WINNERS, TOTAL_RESOURCES)
-    fitness_1_values_children = [fitness_function1(child, LAMBDA_VALUE1) for child in children]
-    fitness2_values_children = [fitness_vecchia_2(child, LAMBDA_VALUE2) for child in children]
-    length = len(children)  # Lunghezza di un individuo
-    print(f"NUMERO DI FIGLI: {length}")
+    fitness1_values_children = [fitness1_function(child, LAMBDA_VALUE1) for child in children]
+    fitness2_values_children = [fitness2_function(child, LAMBDA_VALUE2) for child in children]
+    fitness3_values_children = [fitness3_function(child, LAMBDA_VALUE2, OMEGA2) for child in children]
 
-      # Controlla se la fitness dei figli soddisfa la soglia
+    length = len(children)  # Lunghezza di un individuo
+    print(f"\nNUMERO DI FIGLI: {length}\n")
+
+    # Controlla se la fitness dei figli soddisfa la soglia
     if min(fitness2_values_children) <= TARGET_FITNESS:
         print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
         print(f"\nFiglio con la fitness ottimale: {min(fitness2_values_children)}")

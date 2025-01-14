@@ -1,5 +1,5 @@
 import random
-from Fitness2Vecchia import fitness_vecchia_2
+from Fitness import fitness1_function
 
 def k_point_crossover(parents, k, num_winners, total_resources):
     """
@@ -64,10 +64,10 @@ def k_point_crossover(parents, k, num_winners, total_resources):
         child2 = [int(x) for x in child2]
 
     # Calcola e stampa la fitness dei figli
-        fitness_child1 = fitness_vecchia_2(child1,1)
-        fitness_child2 = fitness_vecchia_2(child2,1)
-        print(f"Figlio {len(children) + 1}: {child1} \ncon Fitness: {fitness_child1}")
-        print(f"Figlio {len(children) + 2}: {child2} \ncon Fitness: {fitness_child2}")                
+        fitness_child1 = fitness1_function(child1,1)
+        fitness_child2 = fitness1_function(child2,1)
+        print(f"Figlio {len(children) + 1}: {child1} \ncon Fitness: {fitness_child1} ... (total resources: {sum(child1)- child1[0]})")
+        print(f"Figlio {len(children) + 2}: {child2} \ncon Fitness: {fitness_child2} ... (total resources: {sum(child2)- child2[0]})")                
 
         children.append(child1)
         children.append(child2)

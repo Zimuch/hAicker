@@ -1,4 +1,4 @@
-def fitness2_function(individual, omega1):
+def fitness3_function(individual, lambda_value, omega2):
     """
     Calcola il punteggio fitness di un individuo.
 
@@ -22,13 +22,16 @@ def fitness2_function(individual, omega1):
     # Risorse totali allocate
     total_allocated = sum(resources_allocated)
 
-    # Obiettivo 1: Costo relativo
-    if total_resources > 0:  # Prevenire divisione per zero
-        C = total_allocated / total_resources
-    else:
-        C = 1  # Se nessuna risorsa è disponibile, il costo è massimo
 
-    # Funzione di fitness: Costo relativo
-    fitness = 10 * omega1 * C 
+    # Obiettivo 2: Distribuzione pesata
+    distribution_weight = 0
+    for i in range(len(rankings)):
+        if rankings[i] > 0 and resources_allocated[i] > 0:
+            vulnerability_corrected = lambda_value * (len(rankings) / (rankings[i] * (resources_allocated[i] ** 0.5)))
+            weight = resources_allocated[i] / total_allocated if total_allocated > 0 else 0
+            distribution_weight += weight * rankings[i] / vulnerability_corrected
+
+    # Funzione di fitness: bilanciamento tra i due obiettivi
+    fitness = omega2 * distribution_weight
 
     return fitness

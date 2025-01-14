@@ -1,5 +1,5 @@
 import random
-from Fitness2Vecchia import fitness_vecchia_2
+from Fitness import fitness1_function
 def k_way_tournament_min(population, fitness_values, k, num_winners):
     """
     Esegue una selezione a torneo k-way dalla popolazione basata sui valori di fitness.
@@ -27,7 +27,7 @@ def k_way_tournament_min(population, fitness_values, k, num_winners):
 
     # Stampa i vincitori con i relativi valori di fitness
     for i, (individual) in enumerate(selected_individuals):
-        fitness_value = fitness_vecchia_2(individual, 1)
-        print(f"Vincitore {i + 1}: {individual} con Fitness: {fitness_value}")
+        fitness_value = fitness1_function(individual, 1)
+        print(f"Vincitore {i + 1}: {individual} con Fitness: {fitness_value} ... (total resources: {sum(individual)- individual[0]})")
 
     return selected_individuals
