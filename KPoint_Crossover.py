@@ -1,49 +1,75 @@
 import random
+from Fitness2Vecchia import fitness_vecchia_2
 
-def k_point_crossover(parent1, parent2, k, TOTAL_RESOURCES):
+def k_point_crossover(parents, k, num_winners, total_resources):
     """
-    Esegue un crossover a k punti tra due genitori per generare due figli,
+    Esegue un crossover a k punti tra coppie di genitori per generare due figli per ogni coppia,
     assicurandosi che le risorse massime allocabili non vengano superate.
 
-    :param parent1: Lista o array del primo genitore.
-    :param parent2: Lista o array del secondo genitore.
+    :param parents: Lista di genitori.
     :param k: Numero di punti di crossover.
-    :param max_resources: Risorse massime allocabili.
-    :return: Due nuovi individui (figli).
+    :param num_winners: Numero di vincitori/genitori.
+    :param total_resources: Risorse massime allocabili.
+    :return: Lista di nuovi individui (figli).
     """
-    # Assicurati che i genitori abbiano la stessa lunghezza
-    if len(parent1) != len(parent2):
-        raise ValueError("I genitori devono avere la stessa lunghezza")
+    # Se il numero di vincitori è dispari, aggiungi un genitore casuale
+    if num_winners % 2 != 0:
+        parents.append(random.choice(parents))
 
-    length = len(parent1)
-    # Genera k punti di crossover casuali unici e ordinati
-    cut_points = sorted(random.sample(range(1, length), k))
+    children = []
 
-    # Aggiungi l'inizio e la fine per facilitare gli scambi
-    cut_points = [0] + cut_points + [length]
-    
-    child1, child2 = [], []
+    for i in range(0, num_winners, 2):
+        parent1 = parents[i]
+        parent2 = parents[i + 1]
 
-    # Alterna tra genitori nelle sezioni definite dai punti di taglio
-    for i in range(len(cut_points) - 1):
-        start, end = cut_points[i], cut_points[i + 1]
-        if i % 2 == 0:
+        # Assicurati che i genitori abbiano la stessa lunghezza
+        if len(parent1) != len(parent2):
+            raise ValueError("I genitori devono avere la stessa lunghezza")
+
+        length = len(parent1)
+               
+        # Assicurati che il numero di punti di crossover non superi la lunghezza del genitore
+        if k >= length:
+            raise ValueError("Il numero di punti di crossover non può essere maggiore o uguale alla lunghezza del genitore")
+
+        # Genera k punti di crossover casuali unici e ordinati
+        cut_points = sorted(random.sample(range(1, length), k))
+
+        # Aggiungi l'inizio e la fine per facilitare gli scambi
+        cut_points = [0] + cut_points + [length]
+        
+        child1, child2 = [], []
+
+        # Alterna tra genitori nelle sezioni definite dai punti di taglio
+        for j in range(len(cut_points) - 1):
+            start, end = cut_points[j], cut_points[j + 1]
             segment1, segment2 = parent1[start:end], parent2[start:end]
-        else:
-            segment1, segment2 = parent2[start:end], parent1[start:end]
+            
+            # Verifica se l'aggiunta del segmento supererebbe le risorse massime
+            if sum(child1) + sum(segment1) <= total_resources and sum(child2) + sum(segment2) <= total_resources:
+                child1.extend(segment1)
+                child2.extend(segment2)
+            else:
+                # Prova a scambiare le celle successive
+                for m in range(len(segment1)):
+                    if sum(child1) + segment2[m] <= total_resources and sum(child2) + segment1[m] <= total_resources:
+                        child1.append(segment2[m])
+                        child2.append(segment1[m])
+                    else:
+                        child1.append(segment1[m])
+                        child2.append(segment2[m])
 
-        # Verifica se l'aggiunta del segmento supererebbe le risorse massime
-        if sum(child1) + sum(segment1) <= TOTAL_RESOURCES and sum(child2) + sum(segment2) <= TOTAL_RESOURCES:
-            child1.extend(segment1)
-            child2.extend(segment2)
-        else:
-            # Prova a scambiare le celle successive
-            for j in range(len(segment1)):
-                if sum(child1) + segment2[j] <= TOTAL_RESOURCES and sum(child2) + segment1[j] <= TOTAL_RESOURCES:
-                    child1.append(segment2[j])
-                    child2.append(segment1[j])
-                else:
-                    child1.append(segment1[j])
-                    child2.append(segment2[j])
+     # Converti gli elementi dell'array in normali interi Python
+        child1 = [int(x) for x in child1]
+        child2 = [int(x) for x in child2]
 
-    return child1, child2
+    # Calcola e stampa la fitness dei figli
+        fitness_child1 = fitness_vecchia_2(child1,1)
+        fitness_child2 = fitness_vecchia_2(child2,1)
+        print(f"Figlio {len(children) + 1}: {child1} \ncon Fitness: {fitness_child1}")
+        print(f"Figlio {len(children) + 2}: {child2} \ncon Fitness: {fitness_child2}")                
+
+        children.append(child1)
+        children.append(child2)
+
+    return children

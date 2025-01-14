@@ -2,6 +2,7 @@ def fitness_function2(individual, lambda_value, omega1, omega2):
     """
     Calcola il punteggio fitness di un individuo.
 
+    
     Args:
         individual: Lista di risorse allocate per ogni ranking, dove individual[0] rappresenta il totale di risorse.
         lambda_value: Valore di correzione per la vulnerabilità.

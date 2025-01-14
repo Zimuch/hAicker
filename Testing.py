@@ -54,7 +54,7 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
         for i in range(1, num_cells):
             if remaining_resources > 0:
                 max_possible = remaining_resources
-                resources = random.randint(0, 100)
+                resources = random.randint(0, RANDOM_RESOURCES)
                 if resources > max_possible:
                     resources = max_possible
                 individual[i] += resources  # Assegniamo le risorse alla cella
@@ -69,15 +69,18 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
 
 
 # Parametri iniziali
-POP_SIZE = 50
-NUM_CELLS = 25
-TOTAL_RESOURCES = 2000
-MIN_RESOURCES = 20
-TOURNAMENT_SIZE = 5
-CROSSOVER_POINTS = 4
-MAX_GENERATIONS = 10
-TARGET_FITNESS = 25 # Soglia di fitness target
-LAMBDA_VALUE = 1  # Valore di lambda 
+POP_SIZE = 50 # Dimensione della popolazione
+NUM_CELLS = 25  # Numero di celle per individuo
+TOTAL_RESOURCES = 2000 # Risorse totali disponibili
+MIN_RESOURCES = 20 # Risorse minime per cella (esclusa la cella 0)
+RANDOM_RESOURCES = (TOTAL_RESOURCES/NUM_CELLS) * 1.25 # Risorse casuali per la distribuzione
+TOURNAMENT_SIZE = int(POP_SIZE/10+1) # Dimensione del torneo
+NUM_WINNERS = int(POP_SIZE/2) # Numero di vincitori
+CROSSOVER_POINTS = 4 # Numero di punti di crossover
+MAX_GENERATIONS = 1 # Numero massimo di generazioni
+TARGET_FITNESS = 7 # Soglia di fitness target
+LAMBDA_VALUE2 = 1  # Valore di lambda
+LAMBDA_VALUE1 = 50 # Valore di lambda 
 OMEGA1 = 0.5  # Peso per l'obiettivo 1
 OMEGA2 = 0.5  # Peso per l'obiettivo 2
 
@@ -102,88 +105,42 @@ for generation in range(MAX_GENERATIONS):
 
 
     # Valutazione della fitness degli individui
-    fitness_2_values = [fitness_vecchia_2(individual, LAMBDA_VALUE) for individual in enumerate(population)]
-    fitness_1_values = [fitness_function1(individual, LAMBDA_VALUE) for individual in population]
-    fitness_combinata = [fitness_vecchia_2(individual, LAMBDA_VALUE, index) - fitness_function1(individual, LAMBDA_VALUE) for index, individual in enumerate(population)]
+    fitness_2_values = [fitness_vecchia_2(individual, LAMBDA_VALUE2) for individual in population]
+    fitness_1_values = [fitness_function1(individual, LAMBDA_VALUE1) for individual in population]
+
 
         # Stampa migliori fitness
+
+    min_fitness = min(fitness_1_values)
+    print(f"\n  Prima Fitness migliore: {min_fitness}")
+
     min_fitness = min(fitness_2_values)
-    print(f"\n  Fitness migliore: {min_fitness}")
- 
+    print(f"\n  Seconda Fitness migliore: {min_fitness}\n")
 
     if min_fitness <= TARGET_FITNESS:
-        print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
+        print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!\n")
         sys.exit()
 
     # Selezione con il K-Way Tournament
-    selected_individuals = k_way_tournament_min(population, fitness_2_values, TOURNAMENT_SIZE) 
+    selected_individuals = k_way_tournament_min(population, fitness_2_values, TOURNAMENT_SIZE, NUM_WINNERS) 
+    fitness_1_values_parents = [fitness_function1(parent, LAMBDA_VALUE1) for parent in selected_individuals]
+    fitness2_values_parents = [fitness_vecchia_2(parent, LAMBDA_VALUE2) for parent in selected_individuals]
 
-    # Crossover tra i primi due individui selezionati
-    parent1 = selected_individuals[0]
-    parent2 = selected_individuals[1]
-    parent3 = selected_individuals[2]
-    parent4 = selected_individuals[3]
-    parent5 = selected_individuals[4]
-    parent6 = selected_individuals[5]
-    fitness_values_parent = [fitness_function_parent(parent1, LAMBDA_VALUE), fitness_function_parent(parent2, LAMBDA_VALUE), 
-                             fitness_function_parent(parent3, LAMBDA_VALUE), fitness_function_parent(parent4, LAMBDA_VALUE), 
-                             fitness_function_parent(parent5, LAMBDA_VALUE), fitness_function_parent(parent6, LAMBDA_VALUE)]
-
-    # Converti i figli in liste di interi normali per la stampa
-    child1, child2 = k_point_crossover(parent1, parent2, CROSSOVER_POINTS, TOTAL_RESOURCES)
-    child3, child4 = k_point_crossover(parent3, parent4, CROSSOVER_POINTS, TOTAL_RESOURCES)
-    child5, child6 = k_point_crossover(parent5, parent6, CROSSOVER_POINTS, TOTAL_RESOURCES)
-    child1 = [int(x) for x in child1]
-    child2 = [int(x) for x in child2]
-    child3 = [int(x) for x in child3]
-    child4 = [int(x) for x in child4]
-    child5 = [int(x) for x in child5]
-    child6 = [int(x) for x in child6]
-
-    # Output per verificare
-    print("\nGenitore 1 scelto dal K-Way Tournament:", parent1)
-    print("\nGenitore 2 scelto dal K-Way Tournament:", parent2)
-    print("\nGenitore 3 scelto dal K-Way Tournament:", parent3)
-    print("\nGenitore 4 scelto dal K-Way Tournament:", parent4)
-    print("\nGenitore 5 scelto dal K-Way Tournament:", parent5)
-    print("\nGenitore 6 scelto dal K-Way Tournament:", parent6)
-    print(f"\nFitness Genitore 1: {fitness_values_parent[0]}")
-    print(f"Fitness Genitore 2: {fitness_values_parent[1]}")
-    print(f"Fitness Genitore 3: {fitness_values_parent[2]}")
-    print(f"Fitness Genitore 4: {fitness_values_parent[3]}")
-    print(f"Fitness Genitore 5: {fitness_values_parent[4]}")
-    print(f"Fitness Genitore 6: {fitness_values_parent[5]}")
-
-
-    # Conserva i valori di fitness dei figli
-    print(f"\nFiglio 1: {child1} ... (total resources: {sum(child1)- child1[0]})")
-    print(f"\nFiglio 2: {child2} ... (total resources: {sum(child2)- child2[0]})")
-    print(f"\nFiglio 3: {child3} ... (total resources: {sum(child3)- child3[0]})")
-    print(f"\nFiglio 4: {child4} ... (total resources: {sum(child4)- child4[0]})")
-    print(f"\nFiglio 5: {child5} ... (total resources: {sum(child5)- child5[0]})")
-    print(f"\nFiglio 6: {child6} ... (total resources: {sum(child6)- child6[0]})\n")
-
-    fitness_values_children = [fitness_function_parent(child1, LAMBDA_VALUE), fitness_function_parent(child2, LAMBDA_VALUE), 
-                               fitness_function_parent(child3, LAMBDA_VALUE), fitness_function_parent(child4, LAMBDA_VALUE), 
-                               fitness_function_parent(child5, LAMBDA_VALUE), fitness_function_parent(child6, LAMBDA_VALUE)]
-    
-    print(f"\nFitness Figlio 1: {fitness_values_children[0]}")
-    print(f"Fitness Figlio 2: {fitness_values_children[1]}")
-    print(f"Fitness Figlio 3: {fitness_values_children[2]}")
-    print(f"Fitness Figlio 4: {fitness_values_children[3]}")
-    print(f"Fitness Figlio 5: {fitness_values_children[4]}")
-    print(f"Fitness Figlio 6: {fitness_values_children[5]}")
+    # Selezione con il K-Point Crossover
+    children = k_point_crossover(selected_individuals, CROSSOVER_POINTS, NUM_WINNERS, TOTAL_RESOURCES)
+    fitness_1_values_children = [fitness_function1(child, LAMBDA_VALUE1) for child in children]
+    fitness2_values_children = [fitness_vecchia_2(child, LAMBDA_VALUE2) for child in children]
+    length = len(children)  # Lunghezza di un individuo
+    print(f"NUMERO DI FIGLI: {length}")
 
       # Controlla se la fitness dei figli soddisfa la soglia
-    if min(fitness_values_children) <= TARGET_FITNESS:
+    if min(fitness2_values_children) <= TARGET_FITNESS:
         print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
-        print(f"\nFiglio con la fitness ottimale: {min(fitness_values_children)}")
+        print(f"\nFiglio con la fitness ottimale: {min(fitness2_values_children)}")
         sys.exit()
 
     # Calcolo della fitness corrente prima della mutazione
-    current_fitness = (fitness_function_parent(child1, LAMBDA_VALUE) + fitness_function_parent(child2, LAMBDA_VALUE)+
-                       fitness_function_parent(child3, LAMBDA_VALUE)+fitness_function_parent(child4, LAMBDA_VALUE)+
-                       fitness_function_parent(child5, LAMBDA_VALUE)+fitness_function_parent(child6, LAMBDA_VALUE)) / 6
+    current_fitness = sum(fitness2_values_children) / len(fitness2_values_children)
 
     # Applica mutazione ai figli
     childmutate1 = mutate(child1, mutation_rate)
@@ -193,29 +150,8 @@ for generation in range(MAX_GENERATIONS):
     childmutate5 = mutate(child5, mutation_rate)
     childmutate6 = mutate(child6, mutation_rate)
 
-    # Calcolo dei valori di fitness per i figli mutati
-    fitness_values_mutate = [
-    fitness_function_parent(childmutate1, LAMBDA_VALUE),
-    fitness_function_parent(childmutate2, LAMBDA_VALUE),
-    fitness_function_parent(childmutate3, LAMBDA_VALUE),
-    fitness_function_parent(childmutate4, LAMBDA_VALUE),
-    fitness_function_parent(childmutate5, LAMBDA_VALUE),
-    fitness_function_parent(childmutate6, LAMBDA_VALUE)
-]
-
     # Stampa dei valori di fitness per i figli mutati
-    print(f"\nFiglio 1 (Mutato): {childmutate1} ... (total resources: {sum(childmutate1)- childmutate1[0]})")
-    print(f"\nFiglio 2 (Mutato): {childmutate2} ... (total resources: {sum(childmutate2)- childmutate2[0]})")
-    print(f"\nFiglio 3 (Mutato): {childmutate3} ... (total resources: {sum(childmutate3)- childmutate3[0]})")
-    print(f"\nFiglio 4 (Mutato): {childmutate4} ... (total resources: {sum(childmutate4)- childmutate4[0]})")
-    print(f"\nFiglio 5 (Mutato): {childmutate5} ... (total resources: {sum(childmutate5)- childmutate5[0]})")
-    print(f"\nFiglio 6 (Mutato): {childmutate6} ... (total resources: {sum(childmutate6)- childmutate6[0]})")
-    print(f"\nFitness Figlio 1 (Mutato): {fitness_values_mutate[0]}")
-    print(f"Fitness Figlio 2 (Mutato): {fitness_values_mutate[1]}")
-    print(f"Fitness Figlio 3 (Mutato): {fitness_values_mutate[2]}")
-    print(f"Fitness Figlio 4 (Mutato): {fitness_values_mutate[3]}")
-    print(f"Fitness Figlio 5 (Mutato): {fitness_values_mutate[4]}")
-    print(f"Fitness Figlio 6 (Mutato): {fitness_values_mutate[5]}")
+
 
     # Calcolo del cambiamento di fitness e aggiornamento del tasso di mutazione
     fitness_change = calculate_fitness_change(previous_fitness, current_fitness)
