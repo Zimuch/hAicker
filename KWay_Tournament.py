@@ -27,7 +27,7 @@ def k_way_tournament_min(population, fitness_values, k, num_winners):
 
     # Stampa i vincitori con i relativi valori di fitness
     for i, (individual) in enumerate(selected_individuals):
-        fitness_value = fitness1_function(individual, 1)
+        fitness_value = fitness1_function(individual, 50)
         print(f"Vincitore {i + 1}: {individual} con Fitness: {fitness_value} ... (total resources: {sum(individual)- individual[0]})")
 
     return selected_individuals

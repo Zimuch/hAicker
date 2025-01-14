@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 import random
-from deap import tools
+from Popolazione import generate_population
 from KWay_Tournament import k_way_tournament_min
 from KPoint_Crossover import k_point_crossover
 from Fitness import fitness1_function
@@ -10,70 +10,13 @@ from Fitness3 import fitness3_function
 from MutationVecchia import mutate, calculate_fitness_change, adaptive_mutation
 
 
-def generate_population(pop_size, num_cells, total_resources, min_resources):
-    """
-    Genera una popolazione iniziale di dimensione `pop_size` con ciascun individuo
-    composto da `num_cells`.
-
-    Parametri:
-    pop_size (int): Numero di individui nella popolazione iniziale.
-    num_cells (int): Numero di celle per individuo.
-    total_resources (int): Numero totale di risorse disponibili.
-    min_resources (int): Risorse minime per cella (esclusa la cella 0).
-
-    Ritorna:
-    list: Lista di individui (array numpy).
-    """
-    import random
-import numpy as np
-
-def generate_population(pop_size, num_cells, total_resources, min_resources):
-
-    population = []
-
-    base_resource = 20  # Risorsa fissa da assegnare inizialmente a tutte le celle
-    remaining_resources = total_resources - base_resource * (num_cells - 1)  # Risorse rimanenti per la distribuzione casuale
-    
-    if remaining_resources < 0:
-        raise ValueError("Non ci sono abbastanza risorse per rispettare il minimo per ogni cella!")
-
-    for _ in range(pop_size):
-        individual = np.zeros(num_cells, dtype=int)
-        individual[0] = total_resources  # La cella 0 contiene il totale delle risorse
-        risorse_totali = individual[0]
-
-        # Distribuire 20 risorse iniziali a tutte le celle tranne la cella 0
-        for i in range(1, num_cells):
-            individual[i] = base_resource  # Assegniamo 20 a tutte le celle (eccetto la cella 0)
-        
-        # Ricalcoliamo le risorse da distribuire
-        remaining_resources = risorse_totali - base_resource * (num_cells-1)  # Risorse rimanenti dopo l'assegnazione iniziale
-
-        # Distribuire le risorse rimanenti in modo casuale
-        for i in range(1, num_cells):
-            if remaining_resources > 0:
-                max_possible = remaining_resources
-                resources = random.randint(0, RANDOM_RESOURCES)
-                if resources > max_possible:
-                    resources = max_possible
-                individual[i] += resources  # Assegniamo le risorse alla cella
-                remaining_resources -= resources  # Decrementiamo le risorse rimanenti
-
-
-        population.append(individual)
-
-    return population
-
-
-
-
 # Parametri iniziali
-POP_SIZE = 50 # Dimensione della popolazione
+POP_SIZE = 30 # Dimensione della popolazione
 NUM_CELLS = 25  # Numero di celle per individuo
 TOTAL_RESOURCES = 2000 # Risorse totali disponibili
 MIN_RESOURCES = 20 # Risorse minime per cella (esclusa la cella 0)
 RANDOM_RESOURCES = (TOTAL_RESOURCES/NUM_CELLS) * 1.25 # Risorse casuali per la distribuzione
-TOURNAMENT_SIZE = int(POP_SIZE/10+1) # Dimensione del torneo
+TOURNAMENT_SIZE = int(POP_SIZE/10) # Dimensione del torneo
 NUM_WINNERS = int(POP_SIZE/2) # Numero di vincitori
 CROSSOVER_POINTS = 4 # Numero di punti di crossover
 MAX_GENERATIONS = 1 # Numero massimo di generazioni
@@ -89,17 +32,20 @@ fitness_threshold = 0.02  # 2% miglioramento minimo
 previous_fitness = 1  # Fitness media iniziale
 
 # Generazione della popolazione iniziale
-population = generate_population(POP_SIZE, NUM_CELLS, TOTAL_RESOURCES, MIN_RESOURCES)
+population = generate_population(POP_SIZE, NUM_CELLS, TOTAL_RESOURCES, MIN_RESOURCES, RANDOM_RESOURCES)
 
 # Ciclo evolutivo
 for generation in range(MAX_GENERATIONS):
-    print(f"\nGenerazione {generation}\n")
+    print("\n///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///\n")
+    print(f"\n                       Generazione {generation}\n")
+    print("\n///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///\n\n")
 
 
     # Stampa alcuni risultati di esempio per vedere la distribuzione delle risorse
     for i, individual in enumerate(population):
         print(f"Individuo {i}: {individual[:25]}... (total resources: {sum(individual)- individual[0]})")
     print("\n")
+    print("///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///\n")
 
 
 
@@ -111,37 +57,40 @@ for generation in range(MAX_GENERATIONS):
 
     # Stampa migliori fitness
     min_fitness = min(fitness1_values)
-    print(f"\n  Prima Fitness migliore: {min_fitness}")
+    print(f"\nFitness1 migliore: {min_fitness}")
 
     min_fitness = min(fitness2_values)
-    print(f"\n  Seconda Fitness migliore: {min_fitness}")
+    print(f"\nFitness2 migliore: {min_fitness}")
 
     min_fitness = min(fitness3_values)
-    print(f"\n  Terza Fitness migliore: {min_fitness}\n")
+    print(f"\nFitness3 migliore: {min_fitness}\n")
 
     if min_fitness <= TARGET_FITNESS:
         print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!\n")
         sys.exit()
 
-    # Selezione con il K-Way Tournament
+
+
+    # Selezione con il K-Way Tournament con numero di vincitori
+    print("\n///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///\n")
+    print(f"\nSelezione K-Way Tournament con {NUM_WINNERS} vincitori:\n")
     selected_individuals = k_way_tournament_min(population, fitness1_values, TOURNAMENT_SIZE, NUM_WINNERS) 
     fitness1_values_parents = [fitness1_function(parent, LAMBDA_VALUE1) for parent in selected_individuals]
     fitness2_values_parents = [(fitness2_function)(parent, LAMBDA_VALUE2) for parent in selected_individuals]
     fitness3_values_parents = [(fitness3_function)(parent, LAMBDA_VALUE2, OMEGA2) for parent in selected_individuals]
 
     # Selezione con il K-Point Crossover
+    print("\n\n///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///\n")
+    print(f"\nCrossover con {CROSSOVER_POINTS} punti:\n")
     children = k_point_crossover(selected_individuals, CROSSOVER_POINTS, NUM_WINNERS, TOTAL_RESOURCES)
     fitness1_values_children = [fitness1_function(child, LAMBDA_VALUE1) for child in children]
     fitness2_values_children = [fitness2_function(child, LAMBDA_VALUE2) for child in children]
     fitness3_values_children = [fitness3_function(child, LAMBDA_VALUE2, OMEGA2) for child in children]
 
-    length = len(children)  # Lunghezza di un individuo
-    print(f"\nNUMERO DI FIGLI: {length}\n")
-
     # Controlla se la fitness dei figli soddisfa la soglia
-    if min(fitness2_values_children) <= TARGET_FITNESS:
+    if min(fitness3_values_children) <= TARGET_FITNESS:
         print(f"\n>>> Soluzione ottimale trovata alla generazione {generation}!")
-        print(f"\nFiglio con la fitness ottimale: {min(fitness2_values_children)}")
+        print(f"\nFiglio con la fitness ottimale: {min(fitness3_values_children)}")
         sys.exit()
 
     # Calcolo della fitness corrente prima della mutazione

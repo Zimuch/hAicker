@@ -1,7 +1,7 @@
-import numpy as np
 import random
+import numpy as np
 
-def generate_population(pop_size, num_cells, total_resources, min_resources):
+def generate_population(pop_size, num_cells, total_resources, min_resources, RANDOM_RESOURCES):
     """
     Genera una popolazione iniziale di dimensione `pop_size` con ciascun individuo
     composto da `num_cells`.
@@ -11,12 +11,11 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
     num_cells (int): Numero di celle per individuo.
     total_resources (int): Numero totale di risorse disponibili.
     min_resources (int): Risorse minime per cella (esclusa la cella 0).
+    RANDOM_RESOURCES (int): Risorse casuali per la distribuzione.
 
     Ritorna:
     list: Lista di individui (array numpy).
     """
-
-def generate_population(pop_size, num_cells, total_resources, min_resources):
 
     population = []
 
@@ -42,7 +41,7 @@ def generate_population(pop_size, num_cells, total_resources, min_resources):
         for i in range(1, num_cells):
             if remaining_resources > 0:
                 max_possible = remaining_resources
-                resources = random.randint(0, 100)
+                resources = random.randint(0, RANDOM_RESOURCES)
                 if resources > max_possible:
                     resources = max_possible
                 individual[i] += resources  # Assegniamo le risorse alla cella

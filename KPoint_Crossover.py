@@ -22,6 +22,10 @@ def k_point_crossover(parents, k, num_winners, total_resources):
         parent1 = parents[i]
         parent2 = parents[i + 1]
 
+        # Assicurati che i genitori non siano identici
+        while parent1 is parent2:
+            parent2 = random.choice(parents)
+
         # Assicurati che i genitori abbiano la stessa lunghezza
         if len(parent1) != len(parent2):
             raise ValueError("I genitori devono avere la stessa lunghezza")
@@ -64,8 +68,8 @@ def k_point_crossover(parents, k, num_winners, total_resources):
         child2 = [int(x) for x in child2]
 
     # Calcola e stampa la fitness dei figli
-        fitness_child1 = fitness1_function(child1,1)
-        fitness_child2 = fitness1_function(child2,1)
+        fitness_child1 = fitness1_function(child1,50)
+        fitness_child2 = fitness1_function(child2,50)
         print(f"Figlio {len(children) + 1}: {child1} \ncon Fitness: {fitness_child1} ... (total resources: {sum(child1)- child1[0]})")
         print(f"Figlio {len(children) + 2}: {child2} \ncon Fitness: {fitness_child2} ... (total resources: {sum(child2)- child2[0]})")                
 
