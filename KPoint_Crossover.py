@@ -1,5 +1,5 @@
 import random
-from Fitness import fitness1_function
+from Obiettivo1 import obiettivo1_danni
 
 def k_point_crossover(parents, k, num_winners, total_resources):
     """

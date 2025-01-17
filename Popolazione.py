@@ -41,7 +41,7 @@ def generate_population(pop_size, num_cells, total_resources, min_resources, RAN
         for i in range(1, num_cells):
             if remaining_resources > 0:
                 max_possible = remaining_resources
-                resources = random.randint(0, RANDOM_RESOURCES)
+                resources = random.randint(0, int(RANDOM_RESOURCES))
                 if resources > max_possible:
                     resources = max_possible
                 individual[i] += resources  # Assegniamo le risorse alla cella

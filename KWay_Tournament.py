@@ -1,5 +1,5 @@
 import random
-from Fitness import fitness1_function
+from Obiettivo1 import obiettivo1_danni
 def k_way_tournament_min(population, fitness_values, k, num_winners):
     """
     Esegue una selezione a torneo k-way dalla popolazione basata sui valori di fitness.

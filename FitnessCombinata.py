@@ -1,54 +1,30 @@
 import numpy as np
+from Obiettivo1 import obiettivo1_danni
+from Obiettivo2 import obiettivo2_costo
+from Obiettivo3 import obiettivo3_distribuzione
 
-def calcola_vulnerabilita(rankings, lambda_value, resources):
-    n = len(rankings)
-    return [
-        lambda_value * (n / rank) / np.sqrt(resource) if resource > 0 else float("inf")
-        for rank, resource in zip(rankings, resources)
-    ]
-
-def calcola_danni(rankings, resources, vulnerabilities):
-    return [rank * resource * vulnerability for rank, resource, vulnerability in zip(rankings, resources, vulnerabilities)]
-
-def fitness_combinata(individual, risorse_totali, omega1, omega2, lambda_value):
+def fitness_combinata(individual, lambda_value1, lambda_value2, omega1, omega2, omega3):
     """
-    Funzione di fitness combinata che utilizza la formula fornita.
+    Calcola il punteggio fitness di un individuo.
 
-    :param individual: Lista delle risorse allocate ai punti vulnerabili (a_i)
-    :param risorse_totali: Valore totale delle risorse disponibili (A)
-    :param omega1: Peso associato alla minimizzazione del costo (C)
-    :param omega2: Peso associato alla massimizzazione della distribuzione pesata (W)
-    :param lambda_value: Valore di lambda per la funzione di vulnerabilità
-    :return: Valore della funzione di fitness combinata
+    
+    Args:
+        individual: Lista di risorse allocate per ogni ranking, dove individual[0] rappresenta il totale di risorse.
+        lambda_value1: Valore di correzione per la vulnerabilità (obiettivo 1).
+        lambda_value2: Valore di correzione per la vulnerabilità (obiettivo 3).
+        omega1: Peso per l'obiettivo 1.
+        omega2: Peso per l'obiettivo 2.
+        omega3: Peso per l'obiettivo 3
+
+    Returns:
+        Punteggio fitness calcolato.
     """
-    resources = individual[1:]  # Ignorare la prima cella
-    n = len(resources)
-    
-    # Calcolo del costo relativo C
-    somma_allocazioni = np.sum(resources)  # Somma delle risorse allocate
-    costo_relativo = somma_allocazioni / risorse_totali  # Costo C, valori più bassi sono migliori
-    
-    # Calcolo del ranking di vulnerabilità basato sull'indice della cella
-    rankings = np.arange(1, n + 1)  # Indici da 1 a n
-    
-    # Calcolo di P_i e W
-    if somma_allocazioni > 0:
-        p_i = (resources * rankings) / somma_allocazioni  # P_i per ogni punto
-        w = np.sum(p_i)  # Somma globale W
-    else:
-        w = 0  # Se nessuna risorsa è allocata, W è 0
-    
-    # Calcolo della vulnerabilità
-    vulnerabilities = calcola_vulnerabilita(rankings, lambda_value, resources)
-    
-    # Calcolo dei danni potenziali
-    danni_potenziali = calcola_danni(rankings, resources, vulnerabilities)
-    dt = np.sum(danni_potenziali)  # Somma dei danni potenziali Dt
-    
-    # Funzione di fitness combinata
-    fitness = omega1 * costo_relativo + omega2 * w + (1 - omega1 - omega2) * dt
+    # Calcolo delle fitness per gli obiettivi
+    fitness1 = obiettivo1_danni(individual, lambda_value1)
+    fitness2 = obiettivo2_costo(individual)
+    fitness3 = obiettivo3_distribuzione(individual, lambda_value2, lambda_value1)
 
-    # Stampa del valore della funzione di fitness calcolato
-    print(f"Fitness Score per Individuo : {fitness}")
-    
+    # Calcolo della fitness combinata
+    fitness = (omega2 * fitness2 + omega3 * fitness3) - omega1 * fitness1
+
     return fitness
