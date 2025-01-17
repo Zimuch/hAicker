@@ -1,7 +1,7 @@
 from Obiettivo1 import obiettivo1_danni
 from Obiettivo2 import obiettivo2_costo
 
-def obiettivo3_distribuzione(individual, lambda_value, lambda_value2):
+def obiettivo3_distribuzione(individual, lambda_value):
     """
     Calcola il punteggio fitness di un individuo.
 
@@ -26,8 +26,7 @@ def obiettivo3_distribuzione(individual, lambda_value, lambda_value2):
     total_allocated = sum(resources_allocated)
 
     # Somma Vulnerabilità
-    total_vulnerability = sum(
-    lambda_value * (len(rankings) / (rankings[j] * (resources_allocated[j] ** 0.5)))
+    total_vulnerability = sum((len(rankings) / (rankings[j] * (resources_allocated[j] ** 0.5)))
     for j in range(len(rankings))
     if rankings[j] > 0 and resources_allocated[j] > 0
     )
@@ -39,10 +38,8 @@ def obiettivo3_distribuzione(individual, lambda_value, lambda_value2):
             weight = resources_allocated[i] / total_allocated if total_allocated > 0 else 0
             distribution_weight += (weight * (resources_allocated[i] / rankings[i])) / total_vulnerability
 
-    #Normalizza il valore di k rispetto alla media degli altri due obiettivi
-    k = 10
     
     # Funzione di fitness: Distribuzione pesata
-    fitness = distribution_weight * k
+    fitness = lambda_value * distribution_weight 
 
     return fitness

@@ -3,7 +3,7 @@ from Obiettivo1 import obiettivo1_danni
 from Obiettivo2 import obiettivo2_costo
 from Obiettivo3 import obiettivo3_distribuzione
 
-def fitness_combinata(individual, lambda_value1, lambda_value2, omega1, omega2, omega3):
+def fitness_combinata(individual, lambda_value1, lambda_value2, lambda_value3, omega1, omega2, omega3):
     """
     Calcola il punteggio fitness di un individuo.
 
@@ -21,8 +21,8 @@ def fitness_combinata(individual, lambda_value1, lambda_value2, omega1, omega2, 
     """
     # Calcolo delle fitness per gli obiettivi
     fitness1 = obiettivo1_danni(individual, lambda_value1)
-    fitness2 = obiettivo2_costo(individual)
-    fitness3 = obiettivo3_distribuzione(individual, lambda_value2, lambda_value1)
+    fitness2 = obiettivo2_costo(individual,lambda_value2)
+    fitness3 = obiettivo3_distribuzione(individual, lambda_value3)
 
     # Calcolo della fitness combinata
     fitness = (omega2 * fitness2 + omega3 * fitness3) - omega1 * fitness1

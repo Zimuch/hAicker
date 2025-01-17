@@ -1,5 +1,5 @@
 import random
-from Obiettivo1 import obiettivo1_danni
+from FitnessCombinata import fitness_combinata
 def k_way_tournament_min(population, fitness_values, k, num_winners):
     """
     Esegue una selezione a torneo k-way dalla popolazione basata sui valori di fitness.
@@ -21,13 +21,8 @@ def k_way_tournament_min(population, fitness_values, k, num_winners):
         tournament_contestants = [population[i] for i in tournament_indices]
         tournament_fitnesses = [fitness_values[i] for i in tournament_indices]
 
-        # Trova l'individuo con la fitness migliore (minore)
-        best_index = tournament_indices[tournament_fitnesses.index(min(tournament_fitnesses))]
+        # Trova l'individuo con la fitness migliore (maggiore)
+        best_index = tournament_indices[tournament_fitnesses.index(max(tournament_fitnesses))]
         selected_individuals.append((population[best_index]))
-
-    # Stampa i vincitori con i relativi valori di fitness
-    for i, (individual) in enumerate(selected_individuals):
-        fitness_value = fitness1_function(individual, 50)
-        print(f"Vincitore {i + 1}: {individual} con Fitness: {fitness_value} ... (total resources: {sum(individual)- individual[0]})")
 
     return selected_individuals

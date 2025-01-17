@@ -1,12 +1,12 @@
 
-def obiettivo2_costo(individual):
+def obiettivo2_costo(individual,LAMBDA_VALUE2):
     """
     Calcola il punteggio fitness di un individuo.
 
     
     Args:
         individual: Lista di risorse allocate per ogni ranking, dove individual[0] rappresenta il totale di risorse.
-        lambda_value: Valore di correzione per la vulnerabilità.
+        lambda_value: Valore di correzione.
 
     Returns:
         Punteggio fitness calcolato.
@@ -26,9 +26,7 @@ def obiettivo2_costo(individual):
     # Obiettivo 1: Costo relativo
     C = total_resources - total_allocated
 
-    # Normalizza il valore di C rispetto agli altri due obiettivi
-    k = 0.1
     # Funzione di fitness: Costo relativo
-    fitness =  C * k 
+    fitness =  C * LAMBDA_VALUE2 
 
     return fitness

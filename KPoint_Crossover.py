@@ -1,6 +1,5 @@
 import random
-from Obiettivo1 import obiettivo1_danni
-
+from FitnessCombinata import fitness_combinata
 def k_point_crossover(parents, k, num_winners, total_resources):
     """
     Esegue un crossover a k punti tra coppie di genitori per generare due figli per ogni coppia,
@@ -50,13 +49,13 @@ def k_point_crossover(parents, k, num_winners, total_resources):
             segment1, segment2 = parent1[start:end], parent2[start:end]
             
             # Verifica se l'aggiunta del segmento supererebbe le risorse massime
-            if sum(child1) + sum(segment1) <= total_resources and sum(child2) + sum(segment2) <= total_resources:
+            if sum(child1[1:]) + sum(segment1) <= total_resources and sum(child2[1:]) + sum(segment2) <= total_resources:
                 child1.extend(segment1)
                 child2.extend(segment2)
             else:
                 # Prova a scambiare le celle successive
                 for m in range(len(segment1)):
-                    if sum(child1) + segment2[m] <= total_resources and sum(child2) + segment1[m] <= total_resources:
+                    if sum(child1[1:]) + segment2[m] <= total_resources and sum(child2[1:]) + segment1[m] <= total_resources:
                         child1.append(segment2[m])
                         child2.append(segment1[m])
                     else:
@@ -66,13 +65,7 @@ def k_point_crossover(parents, k, num_winners, total_resources):
      # Converti gli elementi dell'array in normali interi Python
         child1 = [int(x) for x in child1]
         child2 = [int(x) for x in child2]
-
-    # Calcola e stampa la fitness dei figli
-        fitness_child1 = fitness1_function(child1,50)
-        fitness_child2 = fitness1_function(child2,50)
-        print(f"Figlio {len(children) + 1}: {child1} \ncon Fitness: {fitness_child1} ... (total resources: {sum(child1)- child1[0]})")
-        print(f"Figlio {len(children) + 2}: {child2} \ncon Fitness: {fitness_child2} ... (total resources: {sum(child2)- child2[0]})")                
-
+               
         children.append(child1)
         children.append(child2)
 

@@ -1,9 +1,5 @@
 import random
 
-# Parametri iniziali
-mutation_rate = 0.02  # Tasso di mutazione iniziale
-fitness_threshold = 0.02  # 2% miglioramento minimo
-
 def calculate_fitness_change(previous_fitness, current_fitness):
     """Calcola il cambiamento relativo della fitness tra due generazioni."""
     if previous_fitness == 0:  # Evita la divisione per zero
@@ -12,15 +8,16 @@ def calculate_fitness_change(previous_fitness, current_fitness):
 
 def scramble_mutation(individual):
     """Applicazione della mutazione scramble: scambiare due valori nella lista dell'individuo."""
-    i, j , f , g = random.sample(range(1,len(individual)), 4) # Escludi la cella 0
+    i,j ,f ,g ,h, e = random.sample(range(1,len(individual)), 6) # Escludi la cella 0
     individual[i], individual[j] = individual[j], individual[i]
     individual[f], individual[g] = individual[g], individual[f]
-    return individual,
+    individual[h], individual[e] = individual[e], individual[h]
+    return individual
 
-def adaptive_mutation(individual, previous_fitness, current_fitness, mutation_rate, fitness_threshold):
+def adaptive_mutation(population, previous_fitness, current_fitness, mutation_rate, fitness_threshold):
     """
     Modifica il tasso di mutazione in base al cambiamento della fitness,
-    e applica la mutazione scramble con il tasso di mutazione adattivo.
+    e applica la mutazione scramble con il tasso di mutazione adattivo a ogni individuo della popolazione.
     """
     # Calcolare il cambiamento nella fitness
     fitness_change = calculate_fitness_change(previous_fitness, current_fitness)
@@ -36,9 +33,12 @@ def adaptive_mutation(individual, previous_fitness, current_fitness, mutation_ra
     # Limita il tasso di mutazione tra 0 e 1
     mutation_rate = max(0, min(1, mutation_rate))
 
-    # Applicare la mutazione scramble se il tasso di mutazione è sufficiente
-    if random.random() < mutation_rate:
-        scramble_mutation(individual)
+    # Applicare la mutazione scramble a ciascun individuo della popolazione
+    new_population = []
+    for individual in population:
+        # Applicare la mutazione con probabilità basata sul tasso di mutazione
+        if random.random() < mutation_rate:
+            individual = scramble_mutation(individual)
+        new_population.append(individual)
 
-    return individual, mutation_rate
-
+    return new_population, mutation_rate

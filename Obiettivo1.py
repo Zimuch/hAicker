@@ -1,51 +1,32 @@
-import numpy as np
+import math
 
-def calcola_vulnerabilita(celle, lambd, risorse):
+def obiettivo1_danni(array, lambda_value):
     """
-    Calcola la vulnerabilità per ciascuna cella.
+    Calcola il danno potenziale per ogni cella in base alla formula aggiornata,
+    saltando la cella con indice 0.
 
-    :param celle: Lista o array dei ranking delle celle.
-    :param lambd: Costante che determina il peso del ranking.
-    :param risorse: Lista o array delle risorse allocate alle celle.
-    :return: Lista delle vulnerabilità delle celle.
+    :param array: array di risorse allocate in ogni cella
+    :param lambda_: parametro di scala
+    :return: lista dei danni potenziali per ogni cella, esclusa la cella 0
     """
-    n = len(celle)
-    print("Numero di celle: ", n)
-    vulnerabilita = (n / (rankings[j] * (resources_allocated[j] ** 0.5)))
-    print("Vulnerabilità: ", vulnerabilita)
-    return vulnerabilita
-
-def calcola_danni_potenziali(celle, risorse, vulnerabilita):
-    """
-    Calcola i danni potenziali per ciascuna cella.
-
-    :param celle: Lista o array dei ranking delle celle.
-    :param risorse: Lista o array delle risorse allocate alle celle.
-    :param vulnerabilita: Lista delle vulnerabilità delle celle.
-    :return: Lista dei danni potenziali.
-    """
-    danni_potenziali = [r_i * a_i / v_i for r_i, a_i, v_i in zip(celle, risorse, vulnerabilita)]
-    print("Danni potenziali: ", danni_potenziali)
-    return danni_potenziali
-
-def obiettivo1_danni(risorse, lambd):
-    """
-    Calcola la funzione di fitness per il sistema.
-
-    :param risorse: Lista o array delle risorse allocate alle celle.
-    :param lambd: Costante che determina il peso del ranking.
-    :return: Valore della funzione di fitness.
-    """
-    n = len(risorse)
-    celle = list(range(1, n + 1))  # Ranking delle celle basato sull'indice (1, 2, ..., n)
+    # Lunghezza dell'array
+    n = len(array)
     
-    vulnerabilita = calcola_vulnerabilita(celle, lambd, risorse)
-    danni_potenziali = calcola_danni_potenziali(celle, risorse, vulnerabilita)
+    danni = []
     
-    totale_danni = sum(danni_potenziali)
-    print("Totale danni: ", totale_danni)
+    # Calcolare il danno per ogni cella, saltando la cella 0
+    for i, risorse in enumerate(array):
+        if i == 0:  # Salta la cella con indice 0
+            continue
+        ranking = i  # L'indice dell'array è il ranking
+        vulnerabilità = lambda_value * (n / (ranking * math.sqrt(risorse)))
+        danno = vulnerabilità / (ranking * risorse)
+        danni.append(danno)
 
-    # Funzione di fitness
-    fitness = totale_danni 
+  
+    return sum(danni)
 
-    return fitness
+
+
+
+
