@@ -93,7 +93,7 @@ for generation in range(MAX_GENERATIONS):
     parents = k_way_tournament_min(population, fitness_combinata_values, TOURNAMENT_SIZE, NUM_WINNERS) 
     fitness_combinata_parents= [fitness_combinata(parent, LAMBDA_VALUE1, LAMBDA_VALUE2, LAMBDA_VALUE3, OMEGA1, OMEGA2, OMEGA3) 
                                  for parent in parents]
-    print(f"Sono stati selezionati {NUM_WINNERS} vincitori.\n")
+    print(f"Sono stati selezionati {len(parents)} vincitori.\n")
     
     # Stampa i genitori generati con la relativa fitness combinata
     for i, parent in enumerate(parents):
@@ -130,7 +130,7 @@ for generation in range(MAX_GENERATIONS):
     children_mutate, children_mutation_rate = adaptive_mutation(children, previous_fitness, current_fitness, mutation_rate, fitness_threshold)
     fitness_combinata_mutation= [fitness_combinata(child, LAMBDA_VALUE1, LAMBDA_VALUE2, LAMBDA_VALUE3, OMEGA1, OMEGA2, OMEGA3) 
                                  for child in children_mutate]
-    print(f"Mutazione tentata su {NUM_WINNERS} figli.\n")
+    print(f"Mutazione tentata su {len(children_mutate)} figli.\n")
     # Stampa dei valori di fitness per i figli mutati
     for i, child in enumerate(children_mutate):
         if STAMPE_DEBUG == True : print(f"Figlio Mutato {i+1}: {child} \ncon Fitness: {fitness_combinata_mutation[i]} ... risorse totali: {sum(child)- child[0]} ")
