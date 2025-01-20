@@ -11,9 +11,7 @@ def k_point_crossover(parents, k, num_winners, total_resources):
     :param total_resources: Risorse massime allocabili.
     :return: Lista di nuovi individui (figli).
     """
-    # Se il numero di vincitori è dispari, aggiungi un genitore casuale
-    if num_winners % 2 != 0:
-        parents.append(random.choice(parents))
+
 
     children = []
 

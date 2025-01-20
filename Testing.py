@@ -108,7 +108,7 @@ for generation in range(MAX_GENERATIONS):
     fitness_combinata_children= [fitness_combinata(child, LAMBDA_VALUE1, LAMBDA_VALUE2, LAMBDA_VALUE3, OMEGA1, OMEGA2, OMEGA3) 
                                  for child in children]
     
-    print(f"Crossover applicato su {NUM_WINNERS} genitori.\n")
+    print(f"Crossover applicato su {len(parents)} genitori.\n")
 
     # Stampa i figli generati con la relativa fitness combinata
     for i, child in enumerate(children):
