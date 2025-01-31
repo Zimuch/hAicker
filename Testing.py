@@ -11,7 +11,7 @@ from Mutation import  calculate_fitness_change, adaptive_mutation
 
 
 # Parametri iniziali
-POP_SIZE = 31 # Dimensione della popolazione
+POP_SIZE = 32 # Dimensione della popolazione
 NUM_CELLS = 25  # Numero di celle per individuo
 TOTAL_RESOURCES = 2000 # Risorse totali disponibili
 MIN_RESOURCES = 20 # Risorse minime per cella (esclusa la cella 0)

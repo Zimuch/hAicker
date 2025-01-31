@@ -28,3 +28,4 @@ def fitness_combinata(individual, lambda_value1, lambda_value2, lambda_value3, o
     fitness = (omega2 * fitness2 + omega3 * fitness3) - omega1 * fitness1
 
     return fitness
+ 
