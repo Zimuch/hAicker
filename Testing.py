@@ -30,6 +30,7 @@ OMEGA3 = 0.33  # Peso per l'obiettivo distribuzione pesata
 STAMPE_DEBUG = False  # Stampa di debug per visualizzare dettagli sulla popolazione e i vari processi nel dettaglio
 
 # Parametri di mutazione
+crossover_rate = 0.85  # % Tasso di crossover
 mutation_rate = 0.20  # % Tasso di mutazione iniziale
 fitness_threshold = 0.02  # % miglioramento minimo
 previous_fitness = 0  # Fitness media iniziale
@@ -103,12 +104,12 @@ for generation in range(MAX_GENERATIONS):
     # Selezione con il K-Point Crossover
     print("\n\n///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///  ///\n")
     print(f"\nEsecuzione del Crossover con {CROSSOVER_POINTS} punti sui vincitori del Torneo:\n")
-    children = k_point_crossover(parents, CROSSOVER_POINTS, NUM_WINNERS, TOTAL_RESOURCES)
+    children = k_point_crossover(parents, CROSSOVER_POINTS, NUM_WINNERS, TOTAL_RESOURCES,crossover_rate)
     
     fitness_combinata_children= [fitness_combinata(child, LAMBDA_VALUE1, LAMBDA_VALUE2, LAMBDA_VALUE3, OMEGA1, OMEGA2, OMEGA3) 
                                  for child in children]
     
-    print(f"Crossover applicato su {len(parents)} genitori.\n")
+    print(f"Crossover tentato su {len(parents)} genitori.\n")
 
     # Stampa i figli generati con la relativa fitness combinata
     for i, child in enumerate(children):

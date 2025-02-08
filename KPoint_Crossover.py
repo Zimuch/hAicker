@@ -1,6 +1,6 @@
 import random
 from FitnessCombinata import fitness_combinata
-def k_point_crossover(parents, k, num_winners, total_resources):
+def k_point_crossover(parents, k, num_winners, total_resources,crossover_rate):
     """
     Esegue un crossover a k punti tra coppie di genitori per generare due figli per ogni coppia,
     assicurandosi che le risorse massime allocabili non vengano superate.
@@ -32,6 +32,8 @@ def k_point_crossover(parents, k, num_winners, total_resources):
         # Assicurati che il numero di punti di crossover non superi la lunghezza del genitore
         if k >= length:
             raise ValueError("Il numero di punti di crossover non può essere maggiore o uguale alla lunghezza del genitore")
+    # Esegui il crossover solo se il valore generato casualmente è minore di crossover_rate
+    if random.random() < crossover_rate:
 
         # Genera k punti di crossover casuali unici e ordinati
         cut_points = sorted(random.sample(range(1, length), k))
