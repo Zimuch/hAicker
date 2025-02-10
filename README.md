@@ -35,6 +35,14 @@ Per clonare il progetto **hAicker** e testarlo localmente, segui i seguenti pass
    ```bash
    git clone https://github.com/Zimuch/hAicker.git
 
+Puoi usare un qualsiasi editor, l'importante è che possa eseguire codice in Python.
+
+Una volta clonato il progetto puoi aprire il file hAicker.py per configurare i parametri presenti:
+
+<img src="https://i.imgur.com/DYjfaU3.png" />
+
+Dopo aver impostato tutti i parametri in base alle tue preferenze ti basterà far partire il codice e seguire l'output da terminale.
+
 ## Contributors
 Al progetto hanno partecipato:
 
