@@ -68,6 +68,71 @@ Per clonare il progetto **hAicker** e testarlo localmente, segui i seguenti pass
   ```bash
    python hAicker.py
 
+  English 
+## Introduction
+
+**hAIcker** is a project aimed at investigating the potential of a genetic algorithm to improve software system design, with special attention to cybersecurity considerations, optimizing resource allocation for defenses against hacker attacks.
+
+The approach focuses on the analysis of vulnerabilities, allowing resources to be strategically allocated from the early stages of software development. The genetic algorithm helps determine the most effective distribution of resources in relation to the risk of harm associated with each specific component of the system, ultimately reducing the severity of damage that a hacker intrusion could cause.
+
+The **hAIcker** project provides a useful tool to identify critical nodes within a system and prevent any kind of damage or time loss during the system design phase. Furthermore, **hAIcker** assists designers in communicating with stakeholders by offering the opportunity to test how different resource allocations affect various parts of the system. This enhances the quality of feedback provided to stakeholders, ultimately improving both the development experience and the final outcome.
+
+The algorithm uses three types of techniques: K-Way Tournament for selection, K-Point Crossover for generating the next individuals, and Adaptive Mutation with Scramble to prevent premature convergence in the solutions.
+
+The goal is to make it easier for developers to decide how to allocate resources—both time and money—across the multiple components that a stakeholder may want to include in the system. Additionally, it can be useful for showing stakeholders the potential consequences of their choices on the final product.
+
+The objectives are threefold: first, to reduce the potential damage the system could be exposed to; second, to minimize costs by avoiding unnecessary expenditures; and third, to organize resources in a way that maximizes efficiency while keeping expenses low.
+
+This project was developed as a university project, with the primary focus being on gaining the ability to design an algorithm rather than fully deploying one.
+
+
+
+
+## Authors
+
+- **Silvana De Martino**
+
+- **Simon Carbone**
+
+## Tools
+
+The tools used for accomply teh project was:
+
+![Python](https://img.icons8.com/color/48/000000/python.png) **Python** - used for coding development, is really usefull talking about GA an Machine Learnign beacuse of all the library it allows to use and also for the fact that is actually really simple to use.   
+
+![Visual Studio Code](https://img.icons8.com/?size=48&id=9OGIyU8hrxW5&format=png&color=000000) **Visual Studio Code** - IDE, helpfull talking about cooperation because allows to use GitHub easily.
+
+![undefined - Imgur](https://github.com/user-attachments/assets/1fd747cb-c26e-462a-ba4b-86e42408d3f8)
+ **Overleaf** - text Editor that allows to cooperate while writing text with LaTeX. 
+
+
+ ## How to use it your self
+ 
+Prerequisites
+
+- Make sure you have Git installed on your system.
+- An editor capable of running Python code (e.g., VS Code, PyCharm, Jupyter).
+🔹 Cloning the Repository
+
+- Open the terminal and type the following command:
+
+   ```bash
+   git clone https://github.com/Zimuch/hAicker.git
+
+⚙️ Configuration
+
+- After cloning the project, open the hAicker.py file and modify the parameters according to your needs:
+
+<img src="https://i.imgur.com/DYjfaU3.png" />
+
+▶️ Execution
+
+- Once configured, run the script and observe the output directly in the terminal.
+
+  ```bash
+   python hAicker.py
+
+
 ## Contributors
 Al progetto hanno partecipato:
 
