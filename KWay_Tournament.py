@@ -15,6 +15,7 @@ def k_way_tournament_min(population, fitness_values, k, num_winners):
     """
     selected_individuals = []
 
+
     if(num_winners%2!=0):
         num_winners=num_winners+1
 
