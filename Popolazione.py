@@ -37,6 +37,7 @@ def generate_population(pop_size, num_cells, total_resources, min_resources, RAN
         # Ricalcoliamo le risorse da distribuire
         remaining_resources = risorse_totali - base_resource * (num_cells-1)  # Risorse rimanenti dopo l'assegnazione iniziale
 
+
         # Distribuire le risorse rimanenti in modo casuale
         for i in range(1, num_cells):
             if remaining_resources > 0:
