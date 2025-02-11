@@ -1,5 +1,6 @@
 
 def obiettivo2_costo(individual,LAMBDA_VALUE2):
+    
     """
     Calcola il punteggio fitness di un individuo.
 

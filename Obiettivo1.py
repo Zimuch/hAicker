@@ -14,6 +14,7 @@ def obiettivo1_danni(array, lambda_value):
     
     danni = []
     
+    
     # Calcolare il danno per ogni cella, saltando la cella 0
     for i, risorse in enumerate(array):
         if i == 0:  # Salta la cella con indice 0

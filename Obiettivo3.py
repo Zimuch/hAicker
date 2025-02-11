@@ -2,6 +2,7 @@ from Obiettivo1 import obiettivo1_danni
 from Obiettivo2 import obiettivo2_costo
 
 def obiettivo3_distribuzione(individual, lambda_value):
+    
     """
     Calcola il punteggio fitness di un individuo.
 
