@@ -68,9 +68,8 @@ Per clonare il progetto **hAicker** e testarlo localmente, segui i seguenti pass
   ```bash
    python hAicker.py
 
-  English 
 ## Introduction
-
+ENGLISH
 **hAIcker** is a project aimed at investigating the potential of a genetic algorithm to improve software system design, with special attention to cybersecurity considerations, optimizing resource allocation for defenses against hacker attacks.
 
 The approach focuses on the analysis of vulnerabilities, allowing resources to be strategically allocated from the early stages of software development. The genetic algorithm helps determine the most effective distribution of resources in relation to the risk of harm associated with each specific component of the system, ultimately reducing the severity of damage that a hacker intrusion could cause.
