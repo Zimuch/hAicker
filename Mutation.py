@@ -6,6 +6,7 @@ def calculate_fitness_change(previous_fitness, current_fitness):
         return float('inf')
     return (current_fitness - previous_fitness) / abs(previous_fitness)
 
+
 def scramble_mutation(individual):
     """Applicazione della mutazione scramble: scambiare due valori nella lista dell'individuo."""
     i,j ,f ,g ,h, e = random.sample(range(1,len(individual)), 6) # Escludi la cella 0
