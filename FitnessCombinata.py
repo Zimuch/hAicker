@@ -4,6 +4,7 @@ from Obiettivo2 import obiettivo2_costo
 from Obiettivo3 import obiettivo3_distribuzione
 
 def fitness_combinata(individual, lambda_value1, lambda_value2, lambda_value3, omega1, omega2, omega3):
+    
     """
     Calcola il punteggio fitness di un individuo.
 
