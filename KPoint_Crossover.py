@@ -44,6 +44,7 @@ def k_point_crossover(parents, k, num_winners, total_resources,crossover_rate):
         
             child1, child2 = [], []
 
+
             # Alterna tra genitori nelle sezioni definite dai punti di taglio
             for j in range(len(cut_points) - 1):
                 start, end = cut_points[j], cut_points[j + 1]
