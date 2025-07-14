@@ -1,8 +1,9 @@
 # hAicker
 Italiano 
 ## Introduzione
+![Italiano](https://img.icons8.com/color/48/italy-circular.png) 
 
-**hAicker** hAIcker è un progetto finalizzato a esplorare il potenziale degli algoritmi genetici per migliorare la progettazione dei sistemi software, con particolare attenzione alle considerazioni di sicurezza informatica e all'ottimizzazione dell'allocazione delle risorse per la difesa contro attacchi informatici.
+**hAicker** è un progetto finalizzato a esplorare il potenziale degli algoritmi genetici per migliorare la progettazione dei sistemi software, con particolare attenzione alle considerazioni di sicurezza informatica e all'ottimizzazione dell'allocazione delle risorse per la difesa contro attacchi informatici.
 
 L'approccio si concentra sull'analisi delle vulnerabilità, consentendo di allocare strategicamente le risorse sin dalle prime fasi dello sviluppo di un software. L'algoritmo genetico aiuta a determinare la distribuzione più efficace delle risorse in relazione al rischio di compromissione associato a ciascun componente del sistema, riducendo così la gravità dei danni che un'eventuale incursione informatica potrebbe causare.
 
@@ -69,7 +70,8 @@ Per clonare il progetto **hAicker** e testarlo localmente, segui i seguenti pass
    python hAicker.py
 
 ## Introduction
-ENGLISH
+![English](https://img.icons8.com/color/48/great-britain-circular.png) 
+
 **hAIcker** is a project aimed at investigating the potential of a genetic algorithm to improve software system design, with special attention to cybersecurity considerations, optimizing resource allocation for defenses against hacker attacks.
 
 The approach focuses on the analysis of vulnerabilities, allowing resources to be strategically allocated from the early stages of software development. The genetic algorithm helps determine the most effective distribution of resources in relation to the risk of harm associated with each specific component of the system, ultimately reducing the severity of damage that a hacker intrusion could cause.
